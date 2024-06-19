@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Esfera en 3D girando con Three.js</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Configuración básica de Three.js
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Crear una esfera
+    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    const texture = new THREE.TextureLoader().load('./imagenes/sol.jpg');
+    const material = new THREE.MeshBasicMaterial({map: texture});
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    // Posicionar la cámara
+    camera.position.z = 5;
+
+    // Animación
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Rotación de la esfera
+      sphere.rotation.x += 0.01;
+      sphere.rotation.y += 0.01;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
